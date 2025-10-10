@@ -22,5 +22,7 @@ def download_file():
 
 # VULNERABLE: Unsafe eval
 def calculate(expression):
-    # User input directly evaluated
-    return eval(expression)
+try:
+    result = ast.literal_eval(user_input)
+except (ValueError, SyntaxError):
+    result = None
