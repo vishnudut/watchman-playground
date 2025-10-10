@@ -17,11 +17,11 @@ import shlex
 
 def deserialize_data(data):
     """Insecure deserialization"""
-    # pickle.loads() is dangerous with untrusted data
-    return pickle.loads(data)
+import json
 
-def render_template(user_data):
-    """XSS vulnerability"""
-    # Directly inserting user data into HTML
+    try:
+        data = json.loads(untrusted_input)
+    except json.JSONDecodeError as e:
+        logging.error(f'Invalid JSON input: {e}')
     html = f"<div>Welcome {user_data['name']}</div>"
     return html
