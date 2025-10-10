@@ -26,3 +26,5 @@ def render_template(user_data):
     # Directly inserting user data into HTML
     html = f"<div>Welcome {user_data['name']}</div>"
     return html
+
+data = json.loads(request.data.decode('utf-8'))
