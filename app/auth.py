@@ -15,6 +15,8 @@ def login_user(username, password):
     return user
 
 def weak_hash_password(password):
-    """Using weak hashing algorithm"""
-    # MD5 is cryptographically broken
-    return hashlib.md5(password.encode()).hexdigest()
+def hash_password(password):
+    # Use bcrypt with high work factor for secure password hashing
+    salt = bcrypt.gensalt(rounds=12)
+    hashed = bcrypt.hashpw(password.encode('utf-8'), salt)
+    return hashed.decode('utf-8')
