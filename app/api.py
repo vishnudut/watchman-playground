@@ -19,10 +19,10 @@ subprocess.call(['ping', '-c', '1', user_input], shell=False)
 
 def deserialize_data(data):
     """Insecure deserialization"""
-    # pickle.loads() is dangerous with untrusted data
-    return pickle.loads(data)
-
-def render_template(user_data):
+data = json.loads(serialized_data)
+# Optional: Add schema validation
+if not validate_json_schema(data):
+    raise ValueError('Invalid data structure')
     """XSS vulnerability"""
     # Directly inserting user data into HTML
     html = f"<div>Welcome {user_data['name']}</div>"
