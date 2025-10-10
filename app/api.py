@@ -19,8 +19,24 @@ def unsafe_file_read(filename):
     """Path traversal vulnerability"""
     # No validation - user can access any file
     with open(f"/var/data/{filename}", 'r') as f:
-        return f.read()
+import json, jsonschema
 
+    # Define strict schema for validation
+    schema = {
+        'type': 'object',
+        'properties': {
+            'id': {'type': 'integer'},
+            'name': {'type': 'string'}
+        },
+        'required': ['id', 'name']
+    }
+
+    try:
+        data = json.loads(serialized_data)
+        jsonschema.validate(instance=data, schema=schema)
+    except (json.JSONDecodeError, jsonschema.ValidationError) as e:
+        logging.error(f'Deserialization Error: {e}')
+        raise
 def deserialize_data(data):
     """Insecure deserialization"""
     # pickle.loads() is dangerous with untrusted data
