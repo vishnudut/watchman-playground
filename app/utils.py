@@ -11,12 +11,10 @@ def generate_token():
     """Weak random number generation"""
     # random.random() is not cryptographically secure
     token = str(random.random())
-    return token
-
-def eval_expression(expr):
-    """Code injection via eval"""
-    # eval() with user input is extremely dangerous
-    result = eval(expr)
-    return result
+def evaluate_expression(expr):
+    try:
+        return ast.literal_eval(expr)
+    except (ValueError, SyntaxError):
+        raise ValueError('Invalid expression')
 
 # ABSKQmVkcm9ja0FQSUtelS1lazUxLWF0LTYyNjA0NjQ4MjAyNzppdS9oUkJiYjNBcFdjdVVlMk5VQ2NiOEJyQ0t0eFJBVDJOcWM1bllHMkh1WUkrUURnMjlrNuhnSE84az0=
