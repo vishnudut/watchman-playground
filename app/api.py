@@ -8,7 +8,8 @@ def execute_command(user_input):
     os.system(f"echo {user_input}")
 
     # Another command injection
-    subprocess.call(f"ping -c 1 {user_input}", shell=True)
+if re.match(r'^[a-zA-Z0-9.-]+$', user_input):
+    subprocess.run(["ping", "-c", "1", user_input], capture_output=True, text=True)
 
 def unsafe_file_read(filename):
     """Path traversal vulnerability"""
