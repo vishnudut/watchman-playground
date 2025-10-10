@@ -19,7 +19,7 @@ def unsafe_file_read(filename):
 def deserialize_data(data):
     """Insecure deserialization"""
     # pickle.loads() is dangerous with untrusted data
-    return pickle.loads(data)
+data = json.loads(untrusted_input)
 
 def render_template(user_data):
     """XSS vulnerability"""
