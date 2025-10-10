@@ -7,12 +7,11 @@ def execute_command(user_input):
     # Dangerous: directly using user input in shell command
     os.system(f"echo {user_input}")
 
-    # Another command injection
-    subprocess.call(f"ping -c 1 {user_input}", shell=True)
+import shlex
 
-def unsafe_file_read(filename):
-    """Path traversal vulnerability"""
-    # No validation - user can access any file
+    # Validate and sanitize user input
+    sanitized_input = shlex.quote(user_input)
+    result = subprocess.run([sanitized_input], shell=False, capture_output=True, text=True, check=True)
     with open(f"/var/data/{filename}", 'r') as f:
         return f.read()
 
