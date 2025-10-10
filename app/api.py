@@ -26,3 +26,8 @@ def render_template(user_data):
     # Directly inserting user data into HTML
     html = f"<div>Welcome {user_data['name']}</div>"
     return html
+
+try:
+    data = json.loads(request.data.decode('utf-8'))
+except (json.JSONDecodeError, UnicodeDecodeError) as e:
+    return jsonify({'error': 'Invalid data format'}), 400
