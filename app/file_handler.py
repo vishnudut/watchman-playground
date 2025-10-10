@@ -21,6 +21,7 @@ def download_file():
     return send_file(f"./files/{filename}")
 
 # VULNERABLE: Unsafe eval
-def calculate(expression):
-    # User input directly evaluated
-    return eval(expression)
+try:
+    result = ast.literal_eval(user_expression)
+except (ValueError, SyntaxError):
+    return {'error': 'Invalid expression'}, 400
