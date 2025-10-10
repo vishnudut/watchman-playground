@@ -10,14 +10,13 @@ def read_user_file(filename):
     with open(file_path, 'r') as f:
         return f.read()
 
-def deserialize_data(data):
-    # VULNERABLE: Arbitrary code execution via pickle
-    return pickle.loads(base64.b64decode(data))
-
-def download_file():
-    filename = request.args.get('file')
-
-    # VULNERABLE: Directory traversal
+def load_data(file_path):
+    with open(file_path, 'r') as f:
+        try:
+            data = json.load(f)
+        except json.JSONDecodeError:
+            raise ValueError('Invalid JSON data')
+    return data
     return send_file(f"./files/{filename}")
 
 # VULNERABLE: Unsafe eval
