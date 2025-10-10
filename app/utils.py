@@ -14,9 +14,8 @@ def generate_token():
     return token
 
 def eval_expression(expr):
-    """Code injection via eval"""
-    # eval() with user input is extremely dangerous
-    result = eval(expr)
-    return result
-
-# ABSKQmVkcm9ja0FQSUtelS1lazUxLWF0LTYyNjA0NjQ4MjAyNzppdS9oUkJiYjNBcFdjdVVlMk5VQ2NiOEJyQ0t0eFJBVDJOcWM1bllHMkh1WUkrUURnMjlrNuhnSE84az0=
+def safe_eval(expression):
+    try:
+        return ast.literal_eval(expression)
+    except (ValueError, SyntaxError):
+        raise ValueError('Invalid expression')
