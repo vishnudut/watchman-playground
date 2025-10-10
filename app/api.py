@@ -8,8 +8,13 @@ def execute_command(user_input):
     os.system(f"echo {user_input}")
 
     # Another command injection
-    subprocess.call(f"ping -c 1 {user_input}", shell=True)
+import shlex, subprocess
 
+    # Validate input against allowed pattern
+    if not re.match(r'^[a-zA-Z0-9.-]+$', user_input):
+        raise ValueError('Invalid input')
+    
+    subprocess.call(shlex.split(f'ping -c 1 {user_input}'), shell=False, timeout=5)
 def unsafe_file_read(filename):
     """Path traversal vulnerability"""
     # No validation - user can access any file
