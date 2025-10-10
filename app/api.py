@@ -8,7 +8,13 @@ def execute_command(user_input):
     os.system(f"echo {user_input}")
 
     # Another command injection
-    subprocess.call(f"ping -c 1 {user_input}", shell=True)
+def sanitize_input(user_input):
+    if not re.match(r'^[\w.-]+$', user_input):
+        raise ValueError('Invalid input')
+    return user_input
+
+sanitized_input = sanitize_input(user_input)
+subprocess.call(['ping', '-c', '1', sanitized_input], shell=False)
 
 def unsafe_file_read(filename):
     """Path traversal vulnerability"""
