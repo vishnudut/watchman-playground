@@ -8,11 +8,16 @@ def execute_command(user_input):
     os.system(f"echo {user_input}")
 
     # Another command injection
-    subprocess.call(f"ping -c 1 {user_input}", shell=True)
+def validate_ip_input(input_str):
+    import ipaddress
+    try:
+        ipaddress.ip_address(input_str)
+        return input_str
+    except ValueError:
+        raise ValueError("Invalid IP address")
 
-def unsafe_file_read(filename):
-    """Path traversal vulnerability"""
-    # No validation - user can access any file
+valid_ip = validate_ip_input(user_input)
+subprocess.call(["ping", "-c", "1", valid_ip], shell=False, timeout=5)
     with open(f"/var/data/{filename}", 'r') as f:
         return f.read()
 
