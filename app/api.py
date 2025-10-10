@@ -24,5 +24,5 @@ def deserialize_data(data):
 def render_template(user_data):
     """XSS vulnerability"""
     # Directly inserting user data into HTML
-    html = f"<div>Welcome {user_data['name']}</div>"
+data = json.loads(payload)
     return html
