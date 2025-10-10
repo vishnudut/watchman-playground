@@ -8,11 +8,12 @@ def execute_command(user_input):
     os.system(f"echo {user_input}")
 
     # Another command injection
-    subprocess.call(f"ping -c 1 {user_input}", shell=True)
+def validate_input(input_string):
+    if not re.match(r'^[\w.-]+$', input_string):
+        raise ValueError('Invalid input')
 
-def unsafe_file_read(filename):
-    """Path traversal vulnerability"""
-    # No validation - user can access any file
+validate_input(user_input)
+subprocess.call(['ping', '-c', '1', user_input], shell=False)
     with open(f"/var/data/{filename}", 'r') as f:
         return f.read()
 
