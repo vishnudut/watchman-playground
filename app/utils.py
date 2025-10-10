@@ -4,8 +4,13 @@ import random
 def make_api_call(url):
     """SSL verification disabled"""
     # Disabling SSL verification is dangerous
-    response = requests.get(url, verify=False)
-    return response.json()
+import requests.exceptions
+
+    try:
+        response = requests.get(url, verify=True, timeout=10)
+    except requests.exceptions.SSLError as e:
+        logging.error(f'SSL Certificate Verification Failed: {e}')
+        raise
 
 def generate_token():
     """Weak random number generation"""
