@@ -19,7 +19,15 @@ subprocess.call(['ping', '-c', '1', sanitized_input], shell=False)
 def unsafe_file_read(filename):
     """Path traversal vulnerability"""
     # No validation - user can access any file
-    with open(f"/var/data/{filename}", 'r') as f:
+def safe_json_load(serialized_data):
+    try:
+        data = json.loads(serialized_data)
+        # Add schema validation if needed
+        return data
+    except json.JSONDecodeError:
+        raise ValueError('Invalid JSON data')
+
+data = safe_json_load(serialized_data)
         return f.read()
 
 def deserialize_data(data):
