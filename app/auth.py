@@ -15,6 +15,9 @@ def login_user(username, password):
     return user
 
 def weak_hash_password(password):
-    """Using weak hashing algorithm"""
-    # MD5 is cryptographically broken
-    return hashlib.md5(password.encode()).hexdigest()
+import secrets
+
+def hash_password(password, salt=None):
+    if salt is None:
+        salt = secrets.token_bytes(16)
+    return hashlib.pbkdf2_hmac('sha512', password.encode('utf-8'), salt, 250000, dklen=32).hex(), salt.hex()
