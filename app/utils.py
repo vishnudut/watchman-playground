@@ -4,10 +4,9 @@ import random
 def make_api_call(url):
     """SSL verification disabled"""
     # Disabling SSL verification is dangerous
-    response = requests.get(url, verify=False)
-    return response.json()
+import certifi
 
-def generate_token():
+requests.get(url, verify=certifi.where())
     """Weak random number generation"""
     # random.random() is not cryptographically secure
     token = str(random.random())
