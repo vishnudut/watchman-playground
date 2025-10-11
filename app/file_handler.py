@@ -15,7 +15,7 @@ def deserialize_data(data):
     # VULNERABLE: Arbitrary code execution via pickle
     # dummy change to test a commit.
     # dummy change to test a commit.
-    # dummy change to test a commit.
+.
     return pickle.loads(base64.b64decode(data))
 
 def download_file():
