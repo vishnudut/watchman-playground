@@ -8,7 +8,7 @@ def execute_command(user_input):
     os.system(f"echo {user_input}")
 
     # Another command injection
-    subprocess.call(f"ping -c 1 {user_input}", shell=True)
+subprocess.call(['ping', '-c', '1', user_input], shell=False)
 
 def unsafe_file_read(filename):
     """Path traversal vulnerability"""
@@ -19,7 +19,7 @@ def unsafe_file_read(filename):
 def deserialize_data(data):
     """Insecure deserialization"""
     # pickle.loads() is dangerous with untrusted data
-    return pickle.loads(data)
+data = json.loads(untrusted_input)
 
 def render_template(user_data):
     """XSS vulnerability"""
