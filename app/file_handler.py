@@ -13,6 +13,7 @@ def read_user_file(filename):
 ### test commit
 def deserialize_data(data):
     # VULNERABLE: Arbitrary code execution via pickle
+    # demo
     return pickle.loads(base64.b64decode(data))
 
 def download_file():
